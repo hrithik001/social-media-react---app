@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useReducer } from "react";
 
 export const PostContextList = createContext({
   postListcontent: [],
@@ -25,17 +25,21 @@ const PostListProvider = ({ children }) => {
     postreactions,
     posthashtags
   ) => {
-    dispatchPostlist({
-      type: "ADD",
-      payload: {
-        id: Date.now(),
-        userId: userid,
-        postTitle: posttitle,
-        postContent: postcontent,
-        reactions: postreactions,
-        hashTags: posthashtags,
-      },
-    });
+    if (userid !== "" && posttitle !== "") {
+      dispatchPostlist({
+        type: "ADD",
+        payload: {
+          id: Date.now(),
+          userId: userid,
+          postTitle: posttitle,
+          postContent: postcontent,
+          reactions: postreactions,
+          hashTags: posthashtags,
+        },
+      });
+    } else {
+      alert(`Fill the content for the post first`);
+    }
   };
   const deletePost = (id) => {
     dispatchPostlist({
@@ -52,24 +56,24 @@ const PostListProvider = ({ children }) => {
     </PostContextList.Provider>
   );
 };
-const DEFAULT_POSTS = [
-  {
-    id: "1",
-    userId: "user-001",
-    postTitle: "enjoying the vaccation",
-    postContent: "I'm enjoying my vacation with family and friends.",
+// const DEFAULT_POSTS = [
+//   {
+//     id: "1",
+//     userId: "user-001",
+//     postTitle: "enjoying the vaccation",
+//     postContent: "I'm enjoying my vacation with family and friends.",
 
-    reactions: 12,
-    hashTags: ["enjoying", "vaccations", "nature"],
-  },
-  {
-    id: "2",
-    userId: "user-002",
-    postTitle: "Happy diwali",
-    postContent: "I'm celebrating my diwali with my family,hope u too!!",
+//     reactions: 12,
+//     hashTags: ["enjoying", "vaccations", "nature"],
+//   },
+//   {
+//     id: "2",
+//     userId: "user-002",
+//     postTitle: "Happy diwali",
+//     postContent: "I'm celebrating my diwali with my family,hope u too!!",
 
-    reactions: 120,
-    hashTags: ["enjoying", "celebration", "dipawali"],
-  },
-];
+//     reactions: 120,
+//     hashTags: ["enjoying", "celebration", "dipawali"],
+//   },
+// ];
 export default PostListProvider;
