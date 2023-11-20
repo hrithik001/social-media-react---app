@@ -8,6 +8,9 @@
 .sidebar-height {
   height: 950px;
   min-height: 400px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 .post-cards {
   display: flex;
@@ -29,6 +32,16 @@
   margin-top: 50px;
   margin-left: 25%;
 }
+
 .emptytext {
   margin: 20% 40%;
+}
+
+.static-position {
+  position: fixed;
+}
+.stickypos {
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }

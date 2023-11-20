@@ -25,7 +25,7 @@ const Post = ({ post }) => {
           </span>
         </h5>
         <p className="card-text">{post.postContent}</p>
-        {post.hashTags.map((ele) => (
+        {post.tags.map((ele) => (
           <span key={ele} className="badge text-bg-info spaceBetween">
             {ele}
           </span>

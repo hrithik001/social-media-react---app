@@ -3,6 +3,7 @@ import { createContext, useReducer } from "react";
 export const PostContextList = createContext({
   postListcontent: [],
   addPost: () => {},
+  addNewPosts: () => {},
   deletePost: () => {},
 });
 
@@ -10,6 +11,8 @@ const reducerAction = (currentlist, action) => {
   let newPostList = currentlist;
   if (action.type === "DELETE") {
     newPostList = currentlist.filter((ele) => ele.id != action.payload.id);
+  } else if (action.type === "ADD_NEW_POSTS") {
+    newPostList = action.payload.posts;
   } else if (action.type === "ADD") {
     newPostList = [action.payload, ...newPostList];
   }
@@ -41,6 +44,17 @@ const PostListProvider = ({ children }) => {
       alert(`Fill the content for the post first`);
     }
   };
+
+  const addNewPosts = (posts) => {
+    console.log(posts);
+    dispatchPostlist({
+      type: "ADD_NEW_POSTS",
+      payload: {
+        posts,
+      },
+    });
+  };
+
   const deletePost = (id) => {
     dispatchPostlist({
       type: "DELETE",
@@ -51,29 +65,12 @@ const PostListProvider = ({ children }) => {
   };
 
   return (
-    <PostContextList.Provider value={{ postListcontent, addPost, deletePost }}>
+    <PostContextList.Provider
+      value={{ postListcontent, addPost, addNewPosts, deletePost }}
+    >
       {children}
     </PostContextList.Provider>
   );
 };
-// const DEFAULT_POSTS = [
-//   {
-//     id: "1",
-//     userId: "user-001",
-//     postTitle: "enjoying the vaccation",
-//     postContent: "I'm enjoying my vacation with family and friends.",
 
-//     reactions: 12,
-//     hashTags: ["enjoying", "vaccations", "nature"],
-//   },
-//   {
-//     id: "2",
-//     userId: "user-002",
-//     postTitle: "Happy diwali",
-//     postContent: "I'm celebrating my diwali with my family,hope u too!!",
-
-//     reactions: 120,
-//     hashTags: ["enjoying", "celebration", "dipawali"],
-//   },
-// ];
 export default PostListProvider;
